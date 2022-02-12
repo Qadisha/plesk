@@ -13,8 +13,19 @@ for d in $PLESKHOME/* ; do
 
           if [ -d "$d$ISREDIS" ]; then
                 echo "There is REDIS here."
+		sed -i '/WP_REDIS_SELECTIVE_FLUSH/d' wp-config.php
+		sed -i '/WP_REDIS_PREFIX/d' wp-config.php
+		sed -i '/WP_REDIS_DATABASE/d' wp-config.php
+
+                sed -i "2 i define( 'WP_REDIS_DATABASE', 0 );" wp-config.php
+                sed -i "2 i define( 'WP_REDIS_PREFIX', '$SITENAME' );" wp-config.php
+                sed -i "2 i define( 'WP_REDIS_SELECTIVE_FLUSH', true );" wp-config.php
           else
             echo "There is NO REDIS here."
+			sed -i '/WP_REDIS_SELECTIVE_FLUSH/d' wp-config.php
+			sed -i '/WP_REDIS_PREFIX/d' wp-config.php
+			sed -i '/WP_REDIS_DATABASE/d' wp-config.php
+			
 			sed -i "2 i define( 'WP_REDIS_DATABASE', 0 );" wp-config.php
 			sed -i "2 i define( 'WP_REDIS_PREFIX', '$SITENAME' );" wp-config.php
 			sed -i "2 i define( 'WP_REDIS_SELECTIVE_FLUSH', true );" wp-config.php
