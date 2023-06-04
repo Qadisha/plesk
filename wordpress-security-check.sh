@@ -29,11 +29,18 @@ for d in $HOMEDIR/* ; do
 	rm -rf "$dir"
       done
 
+	pwd
 
       echo "Check critical files"
-      grep -rnw .htaccess -e 'wp-config-sample'
-      grep -rnw wp-config.php -e '@include'
-      grep -rnw index.php -e '@include'
+      if grep -rnw .htaccess -e 'wp-config-sample'; then
+         echo "wp-config-sample"
+      fi
+      if grep -rnw wp-config.php -e '@include'; then
+         echo "Bad inclusion"
+      fi
+      if grep -rnw index.php -e '@include'; then
+         echo "Bad inclusion"
+      fi
 
 
       echo "Remove insecure dot-files"
@@ -45,7 +52,10 @@ for d in $HOMEDIR/* ; do
 
       echo "Search for fake themes"
       find . -type d -name "consultstreet"
-      grep -rnw index.php -e 'FitnessBase'
+      if grep -rnw index.php -e 'FitnessBase'; then
+         echo "FitnessBase theme"
+      fi
+
 
       # Check core directories and place custom .htaccess
       cat <<EOF > wp-content/uploads/.htaccess
