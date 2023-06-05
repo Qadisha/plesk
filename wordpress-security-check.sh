@@ -10,6 +10,12 @@ for d in $HOMEDIR/* ; do
     echo "$d"
     cd "$d"/httpdocs
 
+
+    SYMLINKNO=$(ls -lR . | grep ^l |wc -l)
+    if [[ $SYMLINKNO -gt 0 ]]; then
+      echo "Symlinks in the directory"
+    fi
+
     if [ -f "wp-config.php" ]; then
 
       echo "This is Wordpress"
